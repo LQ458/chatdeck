@@ -1,4 +1,4 @@
-import { Users } from 'lucide-react';
+import { Users } from "lucide-react";
 
 export function ChatPreview() {
   return (
@@ -14,7 +14,9 @@ export function ChatPreview() {
               <span className="text-sm font-medium text-violet-300">A</span>
             </div>
             <div className="bg-gray-800 p-3 rounded-lg shadow-sm max-w-md">
-              <p className="text-gray-200">Anyone here into cyberpunk novels?</p>
+              <p className="text-gray-200">
+                Anyone here into cyberpunk novels?
+              </p>
             </div>
           </div>
           <div className="flex gap-4 items-start justify-end">

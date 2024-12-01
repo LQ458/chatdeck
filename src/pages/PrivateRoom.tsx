@@ -1,13 +1,13 @@
-import { Lock, Copy, Trash2 } from 'lucide-react';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useRoomStore } from '../store/useRoomStore';
-import { RoomList } from '../components/RoomList';
+import { Lock, Copy, Trash2 } from "lucide-react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useRoomStore } from "../store/useRoomStore";
+import { RoomList } from "../components/RoomList";
 
 export function PrivateRoom() {
   const navigate = useNavigate();
-  const [name, setName] = useState('');
-  const [password, setPassword] = useState('');
+  const [name, setName] = useState("");
+  const [password, setPassword] = useState("");
   const createRoom = useRoomStore((state) => state.createRoom);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -26,11 +26,15 @@ export function PrivateRoom() {
             <div className="flex items-center justify-center mb-6">
               <Lock className="h-12 w-12 text-violet-400" />
             </div>
-            <h2 className="text-3xl font-bold text-white text-center mb-8">Create Private Room</h2>
-            
+            <h2 className="text-3xl font-bold text-white text-center mb-8">
+              Create Private Room
+            </h2>
+
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">Room Name</label>
+                <label className="block text-sm font-medium text-gray-300 mb-2">
+                  Room Name
+                </label>
                 <input
                   type="text"
                   value={name}
@@ -40,9 +44,11 @@ export function PrivateRoom() {
                   required
                 />
               </div>
-              
+
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">Room Password (Optional)</label>
+                <label className="block text-sm font-medium text-gray-300 mb-2">
+                  Room Password (Optional)
+                </label>
                 <input
                   type="password"
                   value={password}
@@ -53,7 +59,7 @@ export function PrivateRoom() {
               </div>
 
               <div className="pt-4">
-                <button 
+                <button
                   type="submit"
                   className="w-full bg-violet-600 text-white py-3 rounded-lg hover:bg-violet-700 transition-colors"
                 >

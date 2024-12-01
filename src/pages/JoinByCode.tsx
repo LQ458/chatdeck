@@ -1,4 +1,4 @@
-import { Hash } from 'lucide-react';
+import { Hash } from "lucide-react";
 
 export function JoinByCode() {
   return (
@@ -8,11 +8,15 @@ export function JoinByCode() {
           <div className="flex items-center justify-center mb-6">
             <Hash className="h-12 w-12 text-violet-400" />
           </div>
-          <h2 className="text-3xl font-bold text-white text-center mb-8">Join Room by Code</h2>
-          
+          <h2 className="text-3xl font-bold text-white text-center mb-8">
+            Join Room by Code
+          </h2>
+
           <div className="space-y-6">
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">Room Code</label>
+              <label className="block text-sm font-medium text-gray-300 mb-2">
+                Room Code
+              </label>
               <input
                 type="text"
                 className="w-full px-4 py-2 bg-gray-800 border border-violet-900/50 rounded-lg text-white focus:outline-none focus:border-violet-500 text-center text-2xl tracking-wide"
@@ -20,9 +24,11 @@ export function JoinByCode() {
                 maxLength={6}
               />
             </div>
-            
+
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">Password (if required)</label>
+              <label className="block text-sm font-medium text-gray-300 mb-2">
+                Password (if required)
+              </label>
               <input
                 type="password"
                 className="w-full px-4 py-2 bg-gray-800 border border-violet-900/50 rounded-lg text-white focus:outline-none focus:border-violet-500"

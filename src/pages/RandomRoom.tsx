@@ -1,5 +1,5 @@
-import { Shuffle, Loader } from 'lucide-react';
-import { useState } from 'react';
+import { Shuffle, Loader } from "lucide-react";
+import { useState } from "react";
 
 export function RandomRoom() {
   const [isSearching, setIsSearching] = useState(false);
@@ -11,14 +11,27 @@ export function RandomRoom() {
           <div className="flex items-center justify-center mb-6">
             <Shuffle className="h-12 w-12 text-violet-400" />
           </div>
-          <h2 className="text-3xl font-bold text-white text-center mb-8">Join Random Room</h2>
-          
+          <h2 className="text-3xl font-bold text-white text-center mb-8">
+            Join Random Room
+          </h2>
+
           {!isSearching ? (
             <div className="space-y-6">
               <div className="bg-gray-800 p-6 rounded-lg">
-                <h3 className="text-lg font-medium text-white mb-4">Interests (Optional)</h3>
+                <h3 className="text-lg font-medium text-white mb-4">
+                  Interests (Optional)
+                </h3>
                 <div className="flex flex-wrap gap-2">
-                  {['Gaming', 'Music', 'Movies', 'Books', 'Tech', 'Art', 'Science', 'Sports'].map((interest) => (
+                  {[
+                    "Gaming",
+                    "Music",
+                    "Movies",
+                    "Books",
+                    "Tech",
+                    "Art",
+                    "Science",
+                    "Sports",
+                  ].map((interest) => (
                     <button
                       key={interest}
                       className="px-4 py-2 rounded-lg bg-violet-600/20 hover:bg-violet-600/30 text-violet-300 transition-colors"
@@ -29,7 +42,7 @@ export function RandomRoom() {
                 </div>
               </div>
 
-              <button 
+              <button
                 onClick={() => setIsSearching(true)}
                 className="w-full bg-violet-600 text-white py-3 rounded-lg hover:bg-violet-700 transition-colors"
               >
@@ -37,7 +50,8 @@ export function RandomRoom() {
               </button>
 
               <p className="text-center text-gray-400 text-sm">
-                You'll be matched with other users looking for random conversations
+                You'll be matched with other users looking for random
+                conversations
               </p>
             </div>
           ) : (
@@ -45,9 +59,13 @@ export function RandomRoom() {
               <div className="animate-spin inline-block mb-6">
                 <Loader className="h-12 w-12 text-violet-400" />
               </div>
-              <h3 className="text-xl text-white mb-2">Finding a room for you...</h3>
-              <p className="text-gray-400 mb-8">This usually takes less than a minute</p>
-              <button 
+              <h3 className="text-xl text-white mb-2">
+                Finding a room for you...
+              </h3>
+              <p className="text-gray-400 mb-8">
+                This usually takes less than a minute
+              </p>
+              <button
                 onClick={() => setIsSearching(false)}
                 className="text-violet-400 hover:text-violet-300 transition-colors"
               >

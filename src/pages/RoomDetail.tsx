@@ -1,7 +1,7 @@
-import { useParams, useNavigate } from 'react-router-dom';
-import { useRoomStore } from '../store/useRoomStore';
-import { useEffect } from 'react';
-import { MessageCircle, Users, Copy } from 'lucide-react';
+import { useParams, useNavigate } from "react-router-dom";
+import { useRoomStore } from "../store/useRoomStore";
+import { useEffect } from "react";
+import { MessageCircle, Users, Copy } from "lucide-react";
 
 export function RoomDetail() {
   const { id } = useParams<{ id: string }>();
@@ -10,7 +10,7 @@ export function RoomDetail() {
 
   useEffect(() => {
     if (!room) {
-      navigate('/private-room');
+      navigate("/private-room");
     }
   }, [room, navigate]);
 

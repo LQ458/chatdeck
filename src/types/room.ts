@@ -4,7 +4,7 @@ export interface Room {
   password?: string;
   createdAt: Date;
   participants: number;
-  status: 'active' | 'inactive';
+  status: "active" | "inactive";
 }
 
 export interface CreateRoomInput {

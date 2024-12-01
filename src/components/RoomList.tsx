@@ -1,6 +1,6 @@
-import { useRoomStore } from '../store/useRoomStore';
-import { Trash2 } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useRoomStore } from "../store/useRoomStore";
+import { Trash2 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 export function RoomList() {
   const rooms = useRoomStore((state) => state.rooms);
@@ -22,7 +22,7 @@ export function RoomList() {
           key={room.id}
           className="bg-gray-800 rounded-lg p-4 flex items-center justify-between group hover:bg-gray-800/80 transition-colors"
         >
-          <div 
+          <div
             className="flex-1 cursor-pointer"
             onClick={() => navigate(`/private-room/${room.id}`)}
           >
@@ -32,7 +32,7 @@ export function RoomList() {
               <span>{new Date(room.createdAt).toLocaleTimeString()}</span>
             </div>
           </div>
-          
+
           <button
             onClick={() => deleteRoom(room.id)}
             className="p-2 text-gray-400 hover:text-red-400 opacity-0 group-hover:opacity-100 transition-opacity"

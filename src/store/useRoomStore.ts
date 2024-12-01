@@ -1,5 +1,5 @@
-import { create } from 'zustand';
-import { Room, CreateRoomInput } from '../types/room';
+import { create } from "zustand";
+import { Room, CreateRoomInput } from "../types/room";
 
 interface RoomStore {
   rooms: Room[];
@@ -20,7 +20,7 @@ export const useRoomStore = create<RoomStore>((set, get) => ({
       password: input.password,
       createdAt: new Date(),
       participants: 0,
-      status: 'active',
+      status: "active",
     };
 
     set((state) => ({

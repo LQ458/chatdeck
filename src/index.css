@@ -2,11 +2,36 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  :root {
+    --color-primary-violet: theme("colors.violet.500");
+    --color-primary-blue: theme("colors.blue.500");
+    --color-primary-green: theme("colors.green.500");
+    --color-primary-rose: theme("colors.rose.500");
+  }
+
+  [data-color-scheme="violet"] {
+    --color-primary: var(--color-primary-violet);
+  }
+
+  [data-color-scheme="blue"] {
+    --color-primary: var(--color-primary-blue);
+  }
+
+  [data-color-scheme="green"] {
+    --color-primary: var(--color-primary-green);
+  }
+
+  [data-color-scheme="rose"] {
+    --color-primary: var(--color-primary-rose);
+  }
+}
+
 @layer utilities {
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
   }
-  
+
   .scrollbar-hide {
     -ms-overflow-style: none;
     scrollbar-width: none;
