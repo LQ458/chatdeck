@@ -1,5 +1,5 @@
-import { createContext, useState, useEffect, ReactNode } from 'react';
-import axios from 'axios';
+import { createContext, useState, useEffect, ReactNode } from "react";
+import axios from "axios";
 
 interface User {
   id: string;
@@ -21,7 +21,7 @@ export const AuthContext = createContext<AuthState>({
   user: null,
   loading: true,
   error: null,
-  updateUser: () => {}
+  updateUser: () => {},
 });
 
 interface AuthProviderProps {
@@ -35,44 +35,41 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     loading: true,
     error: null,
     updateUser: (user: User) => {
-      setState(prev => ({
+      setState((prev) => ({
         ...prev,
         user,
-        isAuthenticated: true
+        isAuthenticated: true,
       }));
-    }
+    },
   });
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
     if (!token) {
-      setState(prev => ({ ...prev, loading: false }));
+      setState((prev) => ({ ...prev, loading: false }));
       return;
     }
 
-    axios.get('/api/auth/me', {
-      headers: { Authorization: `Bearer ${token}` }
-    })
-    .then(response => {
-      setState(prev => ({
-        ...prev,
-        isAuthenticated: true,
-        user: response.data.user,
-        loading: false
-      }));
-    })
-    .catch(() => {
-      localStorage.removeItem('token');
-      setState(prev => ({
-        ...prev,
-        loading: false
-      }));
-    });
+    axios
+      .get("/api/auth/me", {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((response) => {
+        setState((prev) => ({
+          ...prev,
+          isAuthenticated: true,
+          user: response.data.user,
+          loading: false,
+        }));
+      })
+      .catch(() => {
+        localStorage.removeItem("token");
+        setState((prev) => ({
+          ...prev,
+          loading: false,
+        }));
+      });
   }, []);
 
-  return (
-    <AuthContext.Provider value={state}>
-      {children}
-    </AuthContext.Provider>
-  );
-}; 
+  return <AuthContext.Provider value={state}>{children}</AuthContext.Provider>;
+};

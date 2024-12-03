@@ -1,4 +1,6 @@
 /** @type {import('tailwindcss').Config} */
+const colors = require("tailwindcss/colors");
+
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   darkMode: "class",
@@ -6,13 +8,19 @@ export default {
     extend: {
       colors: {
         primary: {
-          violet: "var(--color-primary-violet)",
-          blue: "var(--color-primary-blue)",
-          green: "var(--color-primary-green)",
-          rose: "var(--color-primary-rose)",
+          50: "var(--primary-50)",
+          100: "var(--primary-100)",
+          200: "var(--primary-200)",
+          300: "var(--primary-300)",
+          400: "var(--primary-400)",
+          500: "var(--primary-500)",
+          600: "var(--primary-600)",
+          700: "var(--primary-700)",
+          800: "var(--primary-800)",
+          900: "var(--primary-900)",
         },
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [],
 };

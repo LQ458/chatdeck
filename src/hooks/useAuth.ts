@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import axios from 'axios';
+import axios from "axios";
 
 interface User {
   id: string;
@@ -40,8 +40,8 @@ export const useAuth = create<AuthState>()(
           });
 
           const { user, token } = response.data;
-          localStorage.setItem('token', token);
-          
+          localStorage.setItem("token", token);
+
           set({
             user,
             token,
@@ -63,7 +63,7 @@ export const useAuth = create<AuthState>()(
           });
 
           const { user, token } = response.data;
-          localStorage.setItem('token', token);
+          localStorage.setItem("token", token);
 
           set({
             user,
@@ -78,7 +78,7 @@ export const useAuth = create<AuthState>()(
       },
 
       signOut: () => {
-        localStorage.removeItem('token');
+        localStorage.removeItem("token");
         set({
           user: null,
           token: null,

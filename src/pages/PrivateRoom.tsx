@@ -19,61 +19,44 @@ export function PrivateRoom() {
   };
 
   return (
-    <div className="max-w-6xl mx-auto px-4">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div className="bg-gray-900 rounded-2xl shadow-xl border border-violet-900/50 overflow-hidden">
-          <div className="p-8">
-            <div className="flex items-center justify-center mb-6">
-              <Lock className="h-12 w-12 text-violet-400" />
-            </div>
-            <h2 className="text-3xl font-bold text-white text-center mb-8">
-              Create Private Room
-            </h2>
-
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
-                  Room Name
-                </label>
-                <input
-                  type="text"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  className="w-full px-4 py-2 bg-gray-800 border border-violet-900/50 rounded-lg text-white focus:outline-none focus:border-violet-500"
-                  placeholder="Enter room name..."
-                  required
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
-                  Room Password (Optional)
-                </label>
-                <input
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="w-full px-4 py-2 bg-gray-800 border border-violet-900/50 rounded-lg text-white focus:outline-none focus:border-violet-500"
-                  placeholder="Enter password..."
-                />
-              </div>
-
-              <div className="pt-4">
-                <button
-                  type="submit"
-                  className="w-full bg-violet-600 text-white py-3 rounded-lg hover:bg-violet-700 transition-colors"
-                >
-                  Create Room
-                </button>
-              </div>
-            </form>
+    <div className="max-w-2xl mx-auto px-4">
+      <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-xl border border-gray-200 dark:border-primary-900/50 overflow-hidden">
+        <div className="p-8">
+          <div className="flex items-center justify-center mb-6">
+            <Lock className="h-12 w-12 text-primary-400" />
           </div>
-        </div>
+          <h2 className="text-3xl font-bold text-gray-900 dark:text-white text-center mb-8">
+            Create Private Room
+          </h2>
 
-        <div className="bg-gray-900 rounded-2xl shadow-xl border border-violet-900/50 overflow-hidden">
-          <div className="p-8">
-            <h2 className="text-2xl font-bold text-white mb-6">Active Rooms</h2>
-            <RoomList />
+          <div className="space-y-6">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                Room Name
+              </label>
+              <input
+                type="text"
+                className="w-full px-4 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-primary-900/50 rounded-lg text-gray-900 dark:text-white focus:outline-none focus:border-primary-500"
+                placeholder="Enter room name..."
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                Password (optional)
+              </label>
+              <input
+                type="password"
+                className="w-full px-4 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-primary-900/50 rounded-lg text-gray-900 dark:text-white focus:outline-none focus:border-primary-500"
+                placeholder="Set room password..."
+              />
+            </div>
+
+            <div className="pt-4">
+              <button className="w-full bg-primary-600 text-white py-3 rounded-lg hover:bg-primary-700 transition-colors">
+                Create Room
+              </button>
+            </div>
           </div>
         </div>
       </div>

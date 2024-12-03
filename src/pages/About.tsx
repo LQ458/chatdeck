@@ -15,7 +15,7 @@ export function About() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
         <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg">
           <div className="flex justify-center mb-4">
-            <Shield className="h-10 w-10 text-violet-500" />
+            <Shield className="h-10 w-10 text-primary-500" />
           </div>
           <h3 className="text-xl font-semibold text-gray-900 dark:text-white text-center mb-2">
             Secure by Design
@@ -27,7 +27,7 @@ export function About() {
 
         <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg">
           <div className="flex justify-center mb-4">
-            <Users className="h-10 w-10 text-violet-500" />
+            <Users className="h-10 w-10 text-primary-500" />
           </div>
           <h3 className="text-xl font-semibold text-gray-900 dark:text-white text-center mb-2">
             Multiple Room Types
@@ -39,25 +39,25 @@ export function About() {
 
         <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg">
           <div className="flex justify-center mb-4">
-            <Zap className="h-10 w-10 text-violet-500" />
+            <Zap className="h-10 w-10 text-primary-500" />
           </div>
           <h3 className="text-xl font-semibold text-gray-900 dark:text-white text-center mb-2">
             Real-time Experience
           </h3>
           <p className="text-gray-600 dark:text-gray-300 text-center">
-            Instant messaging with real-time updates
+            Instant messaging with seamless synchronization
           </p>
         </div>
 
         <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg">
           <div className="flex justify-center mb-4">
-            <MessageCircle className="h-10 w-10 text-violet-500" />
+            <MessageCircle className="h-10 w-10 text-primary-500" />
           </div>
           <h3 className="text-xl font-semibold text-gray-900 dark:text-white text-center mb-2">
-            Rich Features
+            Smart Features
           </h3>
           <p className="text-gray-600 dark:text-gray-300 text-center">
-            Customizable themes, file sharing, and more
+            Rich text formatting and file sharing capabilities
           </p>
         </div>
       </div>
@@ -110,14 +110,14 @@ export function About() {
         </div>
       </div>
 
-      <div className="bg-violet-600 rounded-2xl shadow-lg p-8 text-center">
+      <div className="bg-primary-600 rounded-2xl shadow-lg p-8 text-center">
         <h2 className="text-3xl font-bold text-white mb-4">Need Help?</h2>
-        <p className="text-violet-100 mb-6">
+        <p className="text-primary-100 mb-6">
           Our support team is here to assist you
         </p>
         <a
           href="mailto:support@chatdeck.com"
-          className="inline-block bg-white text-violet-600 px-6 py-3 rounded-lg font-medium hover:bg-violet-50 transition-colors"
+          className="inline-block bg-white text-primary-600 px-6 py-3 rounded-lg font-medium hover:bg-primary-50 transition-colors"
         >
           Contact Support
         </a>

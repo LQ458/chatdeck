@@ -9,7 +9,7 @@ export function RoomList() {
 
   if (rooms.length === 0) {
     return (
-      <div className="text-center py-8 text-gray-400">
+      <div className="text-center py-8 text-gray-500 dark:text-gray-400">
         No active rooms available
       </div>
     );
@@ -20,14 +20,16 @@ export function RoomList() {
       {rooms.map((room) => (
         <div
           key={room.id}
-          className="bg-gray-800 rounded-lg p-4 flex items-center justify-between group hover:bg-gray-800/80 transition-colors"
+          className="bg-white dark:bg-gray-800 rounded-lg p-4 flex items-center justify-between group hover:bg-gray-50 dark:hover:bg-gray-800/80 transition-colors"
         >
           <div
             className="flex-1 cursor-pointer"
             onClick={() => navigate(`/private-room/${room.id}`)}
           >
-            <h3 className="text-white font-medium mb-1">{room.name}</h3>
-            <div className="flex items-center gap-4 text-sm text-gray-400">
+            <h3 className="text-gray-900 dark:text-white font-medium mb-1">
+              {room.name}
+            </h3>
+            <div className="flex items-center gap-4 text-sm text-gray-500 dark:text-gray-400">
               <span>{room.participants} participants</span>
               <span>{new Date(room.createdAt).toLocaleTimeString()}</span>
             </div>

@@ -19,7 +19,7 @@ export function App() {
   return (
     <ThemeProvider>
       <Router>
-        <div className="min-h-screen bg-gradient-to-b from-gray-50 via-gray-100 to-gray-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 transition-colors">
+        <div className="min-h-screen bg-gradient-to-b from-white via-gray-50 to-gray-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 transition-colors">
           <Header />
 
           <main className="pt-40 pb-20">
@@ -37,8 +37,8 @@ export function App() {
             </Routes>
           </main>
 
-          <footer className="bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-violet-900/50 transition-colors">
-            <div className="max-w-6xl mx-auto px-4 py-6 text-center text-gray-600 dark:text-gray-400">
+          <footer className="bg-gray-50 dark:bg-gray-900 border-t border-gray-200 dark:border-primary-900/50 transition-colors">
+            <div className="max-w-6xl mx-auto px-4 py-6 text-center text-gray-500 dark:text-gray-400">
               <p>© 2024 ChatDeck. Privacy First.</p>
             </div>
           </footer>

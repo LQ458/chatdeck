@@ -1,5 +1,4 @@
-import { createContext, useContext, useEffect, useState } from "react";
-import { getSystemTheme } from "../lib/utils";
+import { createContext, useEffect, useState } from "react";
 
 type Theme = "light" | "dark" | "system";
 type ColorScheme = "violet" | "blue" | "green" | "rose";
@@ -11,47 +10,66 @@ interface ThemeContextType {
   setColorScheme: (scheme: ColorScheme) => void;
 }
 
-const ThemeContext = createContext<ThemeContextType>({
+export const ThemeContext = createContext<ThemeContextType>({
   theme: "system",
   colorScheme: "violet",
-  setTheme: () => {},
-  setColorScheme: () => {},
+  setTheme: () => null,
+  setColorScheme: () => null,
 });
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setTheme] = useState<Theme>("system");
-  const [colorScheme, setColorScheme] = useState<ColorScheme>("violet");
+  const [colorScheme, setColorScheme] = useState<ColorScheme>(() => {
+    const saved = localStorage.getItem("colorScheme");
+    return (saved as ColorScheme) || "violet";
+  });
 
   useEffect(() => {
-    const savedTheme = localStorage.getItem("theme") as Theme;
-    const savedColorScheme = localStorage.getItem("colorScheme") as ColorScheme;
-
-    if (savedTheme) setTheme(savedTheme);
-    if (savedColorScheme) setColorScheme(savedColorScheme);
-
     const root = window.document.documentElement;
-    const isDark =
-      theme === "dark" || (theme === "system" && getSystemTheme() === "dark");
 
-    root.classList.remove("light", "dark");
-    root.classList.add(isDark ? "dark" : "light");
-    root.setAttribute("data-color-scheme", colorScheme);
+    if (theme === "system") {
+      const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
+        .matches
+        ? "dark"
+        : "light";
+      root.classList.remove("light", "dark");
+      root.classList.add(systemTheme);
+    } else {
+      root.classList.remove("light", "dark");
+      root.classList.add(theme);
+    }
+
+    root.classList.remove(
+      "theme-violet",
+      "theme-blue",
+      "theme-green",
+      "theme-rose",
+    );
+    root.classList.add(`theme-${colorScheme}`);
+
+    localStorage.setItem("theme", theme);
+    localStorage.setItem("colorScheme", colorScheme);
   }, [theme, colorScheme]);
 
-  const value = {
-    theme,
-    colorScheme,
-    setTheme: (newTheme: Theme) => {
-      setTheme(newTheme);
-      localStorage.setItem("theme", newTheme);
-    },
-    setColorScheme: (newScheme: ColorScheme) => {
-      setColorScheme(newScheme);
-      localStorage.setItem("colorScheme", newScheme);
-    },
-  };
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+    const handleChange = () => {
+      if (theme === "system") {
+        const root = window.document.documentElement;
+        root.classList.remove("light", "dark");
+        root.classList.add(mediaQuery.matches ? "dark" : "light");
+      }
+    };
+
+    mediaQuery.addEventListener("change", handleChange);
+    return () => mediaQuery.removeEventListener("change", handleChange);
+  }, [theme]);
 
   return (
-    <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>
+    <ThemeContext.Provider
+      value={{ theme, colorScheme, setTheme, setColorScheme }}
+    >
+      {children}
+    </ThemeContext.Provider>
   );
 }

@@ -4,26 +4,60 @@
 
 @layer base {
   :root {
-    --color-primary-violet: theme("colors.violet.500");
-    --color-primary-blue: theme("colors.blue.500");
-    --color-primary-green: theme("colors.green.500");
-    --color-primary-rose: theme("colors.rose.500");
+    /* Default theme (violet) */
+    --primary-50: theme("colors.violet.50");
+    --primary-100: theme("colors.violet.100");
+    --primary-200: theme("colors.violet.200");
+    --primary-300: theme("colors.violet.300");
+    --primary-400: theme("colors.violet.400");
+    --primary-500: theme("colors.violet.500");
+    --primary-600: theme("colors.violet.600");
+    --primary-700: theme("colors.violet.700");
+    --primary-800: theme("colors.violet.800");
+    --primary-900: theme("colors.violet.900");
+    --primary-950: theme("colors.violet.950");
   }
 
-  [data-color-scheme="violet"] {
-    --color-primary: var(--color-primary-violet);
+  :root[class~="theme-blue"] {
+    --primary-50: theme("colors.blue.50");
+    --primary-100: theme("colors.blue.100");
+    --primary-200: theme("colors.blue.200");
+    --primary-300: theme("colors.blue.300");
+    --primary-400: theme("colors.blue.400");
+    --primary-500: theme("colors.blue.500");
+    --primary-600: theme("colors.blue.600");
+    --primary-700: theme("colors.blue.700");
+    --primary-800: theme("colors.blue.800");
+    --primary-900: theme("colors.blue.900");
+    --primary-950: theme("colors.blue.950");
   }
 
-  [data-color-scheme="blue"] {
-    --color-primary: var(--color-primary-blue);
+  :root[class~="theme-green"] {
+    --primary-50: theme("colors.green.50");
+    --primary-100: theme("colors.green.100");
+    --primary-200: theme("colors.green.200");
+    --primary-300: theme("colors.green.300");
+    --primary-400: theme("colors.green.400");
+    --primary-500: theme("colors.green.500");
+    --primary-600: theme("colors.green.600");
+    --primary-700: theme("colors.green.700");
+    --primary-800: theme("colors.green.800");
+    --primary-900: theme("colors.green.900");
+    --primary-950: theme("colors.green.950");
   }
 
-  [data-color-scheme="green"] {
-    --color-primary: var(--color-primary-green);
-  }
-
-  [data-color-scheme="rose"] {
-    --color-primary: var(--color-primary-rose);
+  :root[class~="theme-rose"] {
+    --primary-50: theme("colors.rose.50");
+    --primary-100: theme("colors.rose.100");
+    --primary-200: theme("colors.rose.200");
+    --primary-300: theme("colors.rose.300");
+    --primary-400: theme("colors.rose.400");
+    --primary-500: theme("colors.rose.500");
+    --primary-600: theme("colors.rose.600");
+    --primary-700: theme("colors.rose.700");
+    --primary-800: theme("colors.rose.800");
+    --primary-900: theme("colors.rose.900");
+    --primary-950: theme("colors.rose.950");
   }
 }
 

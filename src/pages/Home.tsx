@@ -13,7 +13,9 @@ export function Home() {
       <div className="text-center mb-16">
         <h1 className="text-5xl font-bold text-gray-900 dark:text-white mb-6">
           Chat{" "}
-          <span className="text-violet-600 dark:text-violet-400">Securely</span>
+          <span className="text-primary-600 dark:text-primary-400">
+            Securely
+          </span>
         </h1>
         <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto mb-8">
           Join ChatDeck for private, secure conversations.
@@ -23,9 +25,9 @@ export function Home() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-3xl mx-auto">
             <Link
               to="/private-room"
-              className="p-6 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-violet-500 dark:hover:border-violet-500 transition-colors"
+              className="p-6 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-primary-500 dark:hover:border-primary-500 transition-colors"
             >
-              <h3 className="text-lg font-semibold mb-2 text-white">
+              <h3 className="text-lg font-semibold mb-2 text-gray-900 dark:text-white">
                 Create Private Room
               </h3>
               <p className="text-gray-600 dark:text-gray-400">
@@ -35,9 +37,9 @@ export function Home() {
 
             <Link
               to="/debate-room"
-              className="p-6 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-violet-500 dark:hover:border-violet-500 transition-colors"
+              className="p-6 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-primary-500 dark:hover:border-primary-500 transition-colors"
             >
-              <h3 className="text-lg font-semibold mb-2 text-white">
+              <h3 className="text-lg font-semibold mb-2 text-gray-900 dark:text-white">
                 Debate Room
               </h3>
               <p className="text-gray-600 dark:text-gray-400">
@@ -46,10 +48,10 @@ export function Home() {
             </Link>
 
             <Link
-              to="/join"
-              className="p-6 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-violet-500 dark:hover:border-violet-500 transition-colors"
+              to="/join-room"
+              className="p-6 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-primary-500 dark:hover:border-primary-500 transition-colors"
             >
-              <h3 className="text-lg font-semibold mb-2 text-white">
+              <h3 className="text-lg font-semibold mb-2 text-gray-900 dark:text-white">
                 Join Room
               </h3>
               <p className="text-gray-600 dark:text-gray-400">
@@ -60,7 +62,7 @@ export function Home() {
         ) : (
           <button
             onClick={() => setIsAuthDialogOpen(true)}
-            className="bg-violet-600 hover:bg-violet-700 rounded-lg px-4 py-2 text-white font-semibold focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-violet-500 transition-colors"
+            className="bg-primary-600 hover:bg-primary-700 rounded-lg px-4 py-2 text-white font-semibold focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors"
           >
             Get Started
           </button>

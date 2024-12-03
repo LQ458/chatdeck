@@ -56,7 +56,9 @@ router.post("/signin", async (req: any, res: any) => {
     const { identifier, password } = req.body;
 
     // Find user by email or username
-    const user = await User.findOne({ $or: [{ email: identifier }, { name: identifier }] });
+    const user = await User.findOne({
+      $or: [{ email: identifier }, { name: identifier }],
+    });
     if (!user) {
       return res.status(401).json({ message: "Invalid email or password" });
     }
@@ -71,7 +73,7 @@ router.post("/signin", async (req: any, res: any) => {
     const token = jwt.sign(
       { userId: user._id },
       process.env.JWT_SECRET as string,
-      { expiresIn: "7d" }
+      { expiresIn: "7d" },
     );
 
     // Return user data and token
@@ -84,7 +86,6 @@ router.post("/signin", async (req: any, res: any) => {
       },
       token,
     });
-
   } catch (error) {
     console.error("Signin error:", error);
     res.status(500).json({ message: "Error signing in" });
@@ -95,7 +96,7 @@ router.post("/signin", async (req: any, res: any) => {
 router.post("/request-reset", async (req: any, res: any) => {
   try {
     const { email } = req.body;
-    
+
     // Find user by email
     const user = await User.findOne({ email });
     if (!user) {
@@ -106,7 +107,7 @@ router.post("/request-reset", async (req: any, res: any) => {
     const resetToken = jwt.sign(
       { userId: user._id },
       process.env.JWT_SECRET as string,
-      { expiresIn: "1h" }
+      { expiresIn: "1h" },
     );
 
     // Save reset token to user
@@ -117,7 +118,6 @@ router.post("/request-reset", async (req: any, res: any) => {
     // TODO: Send reset email with token
 
     res.status(200).json({ message: "Password reset email sent" });
-
   } catch (error) {
     console.error("Password reset request error:", error);
     res.status(500).json({ message: "Error requesting password reset" });
@@ -131,16 +131,18 @@ router.post("/reset-password", async (req: any, res: any) => {
 
     // Verify token
     const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as any;
-    
+
     // Find user and check token
     const user = await User.findOne({
       _id: decoded.userId,
       resetToken: token,
-      resetTokenExpiry: { $gt: Date.now() }
+      resetTokenExpiry: { $gt: Date.now() },
     });
 
     if (!user) {
-      return res.status(400).json({ message: "Invalid or expired reset token" });
+      return res
+        .status(400)
+        .json({ message: "Invalid or expired reset token" });
     }
 
     // Update password
@@ -150,7 +152,6 @@ router.post("/reset-password", async (req: any, res: any) => {
     await user.save();
 
     res.status(200).json({ message: "Password reset successful" });
-
   } catch (error) {
     console.error("Password reset error:", error);
     res.status(500).json({ message: "Error resetting password" });
