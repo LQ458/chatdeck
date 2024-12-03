@@ -1,27 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import axios from "axios";
-
-interface User {
-  id: string;
-  email: string;
-  name: string;
-  image?: string;
-  isNewUser?: boolean;
-}
-
-interface AuthState {
-  user: User | null;
-  token: string | null;
-  isAuthenticated: boolean;
-  loading: boolean;
-  error: string | null;
-  signIn: (identifier: string, password: string) => Promise<void>;
-  signUp: (email: string, password: string, name: string) => Promise<void>;
-  signOut: () => void;
-  signInWithGoogle: () => Promise<void>;
-  updateUser: (user: User) => void;
-}
+import { User, AuthState } from "../types";
 
 export const useAuth = create<AuthState>()(
   persist(

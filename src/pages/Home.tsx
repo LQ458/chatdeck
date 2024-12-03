@@ -48,7 +48,7 @@ export function Home() {
             </Link>
 
             <Link
-              to="/join-room"
+              to="/join-code"
               className="p-6 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-primary-500 dark:hover:border-primary-500 transition-colors"
             >
               <h3 className="text-lg font-semibold mb-2 text-gray-900 dark:text-white">

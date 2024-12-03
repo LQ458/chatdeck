@@ -113,7 +113,7 @@ export function Header() {
                 </Link>
                 <button
                   onClick={() => {
-                    signOut();
+                    signOut?.();
                     setIsOpen(false);
                   }}
                   className="block w-full text-left py-2 text-gray-600 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400"

@@ -3,7 +3,7 @@ import { Fragment, useState } from "react";
 import { X, Loader2 } from "lucide-react";
 import { useAuth } from "../../hooks/useAuth";
 import { FcGoogle } from "react-icons/fc";
-
+import { useTourStore } from "../../store/useTourStore";
 interface AuthDialogProps {
   isOpen: boolean;
   onClose: () => void;
@@ -17,7 +17,7 @@ export function AuthDialog({ isOpen, onClose }: AuthDialogProps) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const { signIn, signUp, signInWithGoogle } = useAuth();
-
+  const { setShowTour } = useTourStore();
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
@@ -31,6 +31,7 @@ export function AuthDialog({ isOpen, onClose }: AuthDialogProps) {
           throw new Error("Name is required");
         }
         await signUp(identifier, password, name);
+        setShowTour(true);
       }
       onClose();
     } catch (err) {

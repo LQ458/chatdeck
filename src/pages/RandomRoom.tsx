@@ -1,5 +1,4 @@
-import { Shuffle, Loader } from "lucide-react";
-import { useState } from "react";
+import { Shuffle } from "lucide-react";
 
 export function RandomRoom() {
   return (

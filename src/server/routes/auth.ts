@@ -22,7 +22,6 @@ router.post("/signup", async (req: any, res: any) => {
       email,
       password,
       name,
-      isNewUser: true,
     });
 
     await user.save();
@@ -40,7 +39,6 @@ router.post("/signup", async (req: any, res: any) => {
         id: user._id,
         email: user.email,
         name: user.name,
-        isNewUser: user.isNewUser,
       },
       token,
     });
@@ -82,7 +80,6 @@ router.post("/signin", async (req: any, res: any) => {
         id: user._id,
         email: user.email,
         name: user.name,
-        isNewUser: user.isNewUser,
       },
       token,
     });

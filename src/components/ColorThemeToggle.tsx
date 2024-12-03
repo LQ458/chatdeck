@@ -32,6 +32,7 @@ export function ColorThemeToggle() {
         onClick={() => setIsOpen(!isOpen)}
         className="p-2 text-gray-600 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400 rounded-lg"
         title="选择颜色主题"
+        id="color-scheme-select"
       >
         <Palette className="h-5 w-5" />
       </button>

@@ -1,11 +1,11 @@
-import { createContext, useState, useEffect, ReactNode } from "react";
+import { AuthContext } from "../contexts/AuthContext";
+import { useState, useEffect, ReactNode } from "react";
 import axios from "axios";
 
 interface User {
   id: string;
   name: string;
   email: string;
-  isNewUser: boolean;
 }
 
 interface AuthState {
@@ -15,14 +15,6 @@ interface AuthState {
   error: string | null;
   updateUser: (user: User) => void;
 }
-
-export const AuthContext = createContext<AuthState>({
-  isAuthenticated: false,
-  user: null,
-  loading: true,
-  error: null,
-  updateUser: () => {},
-});
 
 interface AuthProviderProps {
   children: ReactNode;

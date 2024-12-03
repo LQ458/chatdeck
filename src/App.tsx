@@ -10,12 +10,9 @@ import { PasswordReset } from "./pages/PasswordReset";
 import { About } from "./pages/About";
 import { AuthGuard } from "./components/AuthGuard";
 import { UserOnboarding } from "./components/UserOnboarding";
-import { useAuth } from "./hooks/useAuth";
 import { ThemeProvider } from "./providers/ThemeProvider";
 
 export function App() {
-  const { isAuthenticated, user } = useAuth();
-
   return (
     <ThemeProvider>
       <Router>
@@ -43,7 +40,7 @@ export function App() {
             </div>
           </footer>
         </div>
-        {isAuthenticated && user?.isNewUser && <UserOnboarding />}
+        <UserOnboarding />
       </Router>
     </ThemeProvider>
   );
