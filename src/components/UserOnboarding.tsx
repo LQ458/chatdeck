@@ -1,61 +1,91 @@
-import { useEffect } from "react";
-import { driver } from "driver.js";
-import "driver.js/dist/driver.css";
-import { useAuth } from "../hooks/useAuth";
+import { useEffect, useState } from 'react';
+import { Steps } from 'intro.js-react';
+import 'intro.js/introjs.css';
+import { useAuth } from '../hooks/useAuth';
+import axios from 'axios';
 
-export function UserOnboarding() {
-  const { user } = useAuth();
+interface Step {
+  element: string;
+  intro: string;
+  position?: string;
+}
+
+export const UserOnboarding = () => {
+  const { user, updateUser } = useAuth();
+  const [enabled, setEnabled] = useState(false);
+
+  const steps: Step[] = [
+    {
+      element: '#nav-home',
+      intro: '这是主页，你可以在这里看到最新动态',
+      position: 'bottom'
+    },
+    {
+      element: '#theme-toggle-btn',
+      intro: '点击这里可以切换明暗主题',
+      position: 'bottom'
+    },
+    {
+      element: '#color-scheme-select',
+      intro: '选择你喜欢的颜色主题',
+      position: 'bottom'
+    },
+    {
+      element: '#chat-container',
+      intro: '这是聊天区域，你可以在这里与其他用户交流',
+      position: 'left'
+    },
+    {
+      element: '#online-users',
+      intro: '这里显示当前在线的用户',
+      position: 'right'
+    },
+    {
+      element: '#message-input',
+      intro: '在这里输入要发送的消息',
+      position: 'top'
+    },
+    {
+      element: '#user-settings',
+      intro: '在这里可以修改你的个人设置',
+      position: 'left'
+    }
+  ];
 
   useEffect(() => {
-    if (!user?.isNewUser) return;
-
-    const driverObj = driver({
-      showProgress: true,
-      steps: [
-        {
-          element: "#create-room-btn",
-          popover: {
-            title: "Create Private Rooms",
-            description:
-              "Start your own private chat room and invite others to join.",
-            side: "bottom",
-          },
-        },
-        {
-          element: "#debate-room-btn",
-          popover: {
-            title: "Debate Rooms",
-            description:
-              "Create structured debate rooms with teams and topics.",
-            side: "bottom",
-          },
-        },
-        {
-          element: "#join-code-btn",
-          popover: {
-            title: "Join by Code",
-            description: "Enter a room code to join existing conversations.",
-            side: "bottom",
-          },
-        },
-        {
-          element: "#theme-toggle",
-          popover: {
-            title: "Customize Your Experience",
-            description:
-              "Switch between light and dark modes, or choose your preferred color scheme.",
-            side: "bottom",
-          },
-        },
-      ],
-    });
-
-    driverObj.drive();
-
-    return () => {
-      driverObj.destroy();
-    };
+    if (user?.isNewUser) {
+      setEnabled(true);
+    }
   }, [user]);
 
-  return null;
-}
+  const onExit = async () => {
+    setEnabled(false);
+    if (user?.id) {
+      try {
+        await axios.patch(`/api/users/${user.id}`, {
+          isNewUser: false
+        });
+        updateUser({ ...user, isNewUser: false });
+      } catch (error) {
+        console.error('Failed to update user status:', error);
+      }
+    }
+  };
+
+  return (
+    <Steps
+      enabled={enabled}
+      steps={steps}
+      initialStep={0}
+      onExit={onExit}
+      options={{
+        doneLabel: '完成',
+        nextLabel: '下一步',
+        prevLabel: '上一步',
+        exitOnOverlayClick: false,
+        showStepNumbers: true,
+        scrollToElement: true
+      }}
+    />
+  );
+};

@@ -22,7 +22,7 @@ export function Home() {
         {isAuthenticated ? (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-3xl mx-auto">
             <Link
-              to="/create-room"
+              to="/private-room"
               className="p-6 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-violet-500 dark:hover:border-violet-500 transition-colors"
             >
               <h3 className="text-lg font-semibold mb-2 text-white">
