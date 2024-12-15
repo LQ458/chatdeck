@@ -1,26 +1,30 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-namespace */
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
-import { User } from "../models/User";
 
 interface AuthRequest extends Request {
-  user?: any;
+  user: {
+    userId: string;
+    iat: number;
+    exp: number;
+  };
 }
 
 export const authMiddleware = async (
-  req: Request,
+  req: AuthRequest,
   res: Response,
-  next: NextFunction,
-) => {
+  next: NextFunction
+): Promise<void> => {
   try {
-    const token = req.headers.authorization?.split(" ")[1];
+    const token = req.headers.authorization;
 
     if (!token) {
-      return res.status(401).json({ message: "Authentication required" });
+      res.status(401).json({ message: "Authentication required" });
+      return;
     }
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET as string);
-    req.user = decoded;
+    req.user = decoded as AuthRequest["user"];
 
     next();
   } catch (error) {
@@ -29,11 +33,14 @@ export const authMiddleware = async (
   }
 };
 
-// 扩展Request类型
 declare global {
   namespace Express {
     interface Request {
-      user?: any;
+      user: {
+        userId: string;
+        iat: number;
+        exp: number;
+      };
     }
   }
 }

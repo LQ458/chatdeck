@@ -10,7 +10,9 @@ export interface Room {
   name: string;
   password?: string;
   createdAt: Date;
-  participants: number;
+  participants: {
+    id: string;
+  }[];
   status: "active" | "inactive";
 }
 

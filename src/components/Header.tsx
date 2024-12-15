@@ -1,11 +1,14 @@
 import { Link } from "react-router-dom";
 import { Menu, X } from "lucide-react";
-import { useState } from "react";
 import { useAuth } from "../hooks/useAuth";
 import { ThemeToggle } from "./ThemeToggle";
 import { ColorThemeToggle } from "./ColorThemeToggle";
-
-export function Header() {
+import { useState } from "react";
+export function Header({
+  setIsAuthDialogOpen,
+}: {
+  setIsAuthDialogOpen: (open: boolean) => void;
+}) {
   const [isOpen, setIsOpen] = useState(false);
   const { isAuthenticated, signOut } = useAuth();
 
@@ -57,7 +60,7 @@ export function Header() {
               </>
             ) : (
               <button
-                onClick={() => setIsOpen(true)}
+                onClick={() => setIsAuthDialogOpen(true)}
                 className="text-gray-600 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400"
               >
                 Sign In
@@ -73,7 +76,11 @@ export function Header() {
             onClick={() => setIsOpen(!isOpen)}
             className="md:hidden text-gray-600 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400"
           >
-            {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            {isOpen ? (
+              <X className="h-6 w-6" />
+            ) : (
+              <Menu className="h-6 w-6" />
+            )}
           </button>
         </div>
       </div>
@@ -93,28 +100,28 @@ export function Header() {
                 <Link
                   to="/private-room"
                   className="block py-2 text-gray-600 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400"
-                  onClick={() => setIsOpen(false)}
+                  onClick={() => setIsAuthDialogOpen(false)}
                 >
                   Private Room
                 </Link>
                 <Link
                   to="/debate-room"
                   className="block py-2 text-gray-600 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400"
-                  onClick={() => setIsOpen(false)}
+                  onClick={() => setIsAuthDialogOpen(false)}
                 >
                   Debate Room
                 </Link>
                 <Link
                   to="/random-room"
                   className="block py-2 text-gray-600 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400"
-                  onClick={() => setIsOpen(false)}
+                  onClick={() => setIsAuthDialogOpen(false)}
                 >
                   Random Chat
                 </Link>
                 <button
                   onClick={() => {
                     signOut?.();
-                    setIsOpen(false);
+                    setIsAuthDialogOpen(false);
                   }}
                   className="block w-full text-left py-2 text-gray-600 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400"
                 >
@@ -124,8 +131,7 @@ export function Header() {
             ) : (
               <button
                 onClick={() => {
-                  setIsOpen(false);
-                  // Open auth dialog
+                  setIsAuthDialogOpen(false);
                 }}
                 className="block w-full text-left py-2 text-gray-600 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400"
               >

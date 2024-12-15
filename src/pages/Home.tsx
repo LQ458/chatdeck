@@ -1,11 +1,15 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import { ChatPreview } from "../components/ChatPreview";
 import { AuthDialog } from "../components/ui/auth-dialog";
 import { useAuth } from "../hooks/useAuth";
 
-export function Home() {
-  const [isAuthDialogOpen, setIsAuthDialogOpen] = useState(false);
+export function Home({
+  setIsAuthDialogOpen,
+  isAuthDialogOpen,
+}: {
+  setIsAuthDialogOpen: (open: boolean) => void;
+  isAuthDialogOpen: boolean;
+}) {
   const { isAuthenticated } = useAuth();
 
   return (

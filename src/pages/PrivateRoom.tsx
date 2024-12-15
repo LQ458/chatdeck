@@ -1,21 +1,25 @@
-import { Lock, Copy, Trash2 } from "lucide-react";
+import { Lock } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useRoomStore } from "../store/useRoomStore";
-import { RoomList } from "../components/RoomList";
+import { useSocket } from "../hooks/useSocket";
 
 export function PrivateRoom() {
   const navigate = useNavigate();
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
-  const createRoom = useRoomStore((state) => state.createRoom);
+  const token = localStorage.getItem("token");
+  const { createRoom } = useSocket(token as string);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!name.trim()) return;
+    const resp = await createRoom({
+      name,
+      type: "private",
+      password: password || undefined,
+    });
 
-    const room = createRoom({ name, password: password || undefined });
-    navigate(`/private-room/${room.id}`);
+    navigate(`/private-room/${resp?.roomId}`);
   };
 
   return (
@@ -29,7 +33,7 @@ export function PrivateRoom() {
             Create Private Room
           </h2>
 
-          <div className="space-y-6">
+          <form className="space-y-6" onSubmit={handleSubmit}>
             <div>
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                 Room Name
@@ -38,6 +42,8 @@ export function PrivateRoom() {
                 type="text"
                 className="w-full px-4 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-primary-900/50 rounded-lg text-gray-900 dark:text-white focus:outline-none focus:border-primary-500"
                 placeholder="Enter room name..."
+                value={name}
+                onChange={(e) => setName(e.target.value)}
               />
             </div>
 
@@ -49,15 +55,20 @@ export function PrivateRoom() {
                 type="password"
                 className="w-full px-4 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-primary-900/50 rounded-lg text-gray-900 dark:text-white focus:outline-none focus:border-primary-500"
                 placeholder="Set room password..."
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
             </div>
 
             <div className="pt-4">
-              <button className="w-full bg-primary-600 text-white py-3 rounded-lg hover:bg-primary-700 transition-colors">
+              <button
+                type="submit"
+                className="w-full bg-primary-600 text-white py-3 rounded-lg hover:bg-primary-700 transition-colors"
+              >
                 Create Room
               </button>
             </div>
-          </div>
+          </form>
         </div>
       </div>
     </div>

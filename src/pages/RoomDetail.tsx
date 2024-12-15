@@ -1,20 +1,46 @@
-import { useParams, useNavigate } from "react-router-dom";
-import { useRoomStore } from "../store/useRoomStore";
-import { useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { MessageCircle, Users, Copy } from "lucide-react";
+import { Room } from "../types";
+import { useSocket } from "../hooks/useSocket";
 
 export function RoomDetail() {
   const { id } = useParams<{ id: string }>();
-  const navigate = useNavigate();
-  const room = useRoomStore((state) => state.getRoom(id!));
+  const token = localStorage.getItem("token");
+  const { getRoom, connected } = useSocket(token as string);
+  const [room, setRoom] = useState<Room | null>(null);
+  const [error, setError] = useState<string>("");
 
   useEffect(() => {
-    if (!room) {
-      navigate("/private-room");
-    }
-  }, [room, navigate]);
+    let retryCount = 0;
+    const maxRetries = 3;
+    
+    const fetchRoom = async () => {
+      if (!connected) {
+        if (retryCount < maxRetries) {
+          retryCount++;
+          setTimeout(fetchRoom, 1000); // 1秒后重试
+          return;
+        }
+        setError("Failed to connect to server");
+        return;
+      }
 
-  if (!room) return null;
+      try {
+        const roomData = await getRoom(id as string);
+        setRoom(roomData);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "Failed to fetch room");
+      }
+    };
+
+    if (id) {
+      fetchRoom();
+    }
+  }, [id, connected, getRoom]);
+
+  if (error) return <div>Error: {error}</div>;
+  if (!room) return <div>Loading...</div>;
 
   return (
     <div className="max-w-6xl mx-auto px-4">
@@ -22,12 +48,12 @@ export function RoomDetail() {
         <div className="p-6 border-b border-violet-900/50 flex items-center justify-between">
           <div className="flex items-center gap-4">
             <MessageCircle className="h-6 w-6 text-violet-400" />
-            <h1 className="text-xl font-semibold text-white">{room.name}</h1>
+            <h1 className="text-xl font-semibold text-white">{room?.name}</h1>
           </div>
           <div className="flex items-center gap-4 text-gray-400">
             <div className="flex items-center gap-2">
               <Users className="h-5 w-5" />
-              <span>{room.participants}</span>
+              <span>{room?.participants.length}</span>
             </div>
             <button className="flex items-center gap-2 hover:text-violet-400 transition-colors">
               <Copy className="h-5 w-5" />
