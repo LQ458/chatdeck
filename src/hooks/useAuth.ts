@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+// the global auth state of the app
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import axios from "axios";

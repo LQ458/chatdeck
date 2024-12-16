@@ -3,18 +3,13 @@ import { useState } from "react";
 // import { useNavigate } from "react-router-dom";
 import { Toast } from "primereact/toast";
 
-export function JoinByCode({
-  toast
-}: {
-  toast: React.RefObject<Toast>
-}) {
+export function JoinByCode({ toast }: { toast: React.RefObject<Toast> }) {
   // const navigate = useNavigate();
   // const { joinRoom } = useSocketStore();
-  
+
   const [roomCode, setRoomCode] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-
 
   // const handleSubmit = async (e: React.FormEvent) => {
   //   e.preventDefault();
@@ -76,7 +71,7 @@ export function JoinByCode({
             </div>
 
             <div className="pt-4">
-              <button 
+              <button
                 type="submit"
                 disabled={loading || !roomCode}
                 className="w-full bg-primary-600 text-white py-3 rounded-lg hover:bg-primary-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"

@@ -76,11 +76,7 @@ export function Header({
             onClick={() => setIsOpen(!isOpen)}
             className="md:hidden text-gray-600 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400"
           >
-            {isOpen ? (
-              <X className="h-6 w-6" />
-            ) : (
-              <Menu className="h-6 w-6" />
-            )}
+            {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </button>
         </div>
       </div>

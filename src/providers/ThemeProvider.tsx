@@ -1,27 +1,18 @@
-import { createContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { Theme } from "../types";
+import { ThemeContext } from "../contexts/ThemeContext";
 
-type Theme = "light" | "dark" | "system";
-type ColorScheme = "violet" | "blue" | "green" | "rose";
-
-interface ThemeContextType {
-  theme: Theme;
-  colorScheme: ColorScheme;
-  setTheme: (theme: Theme) => void;
-  setColorScheme: (scheme: ColorScheme) => void;
-}
-
-export const ThemeContext = createContext<ThemeContextType>({
-  theme: "system",
-  colorScheme: "violet",
-  setTheme: () => null,
-  setColorScheme: () => null,
-});
+type ColorTheme = "blue" | "violet" | "green" | "rose";
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setTheme] = useState<Theme>("system");
-  const [colorScheme, setColorScheme] = useState<ColorScheme>(() => {
-    const saved = localStorage.getItem("colorScheme");
-    return (saved as ColorScheme) || "violet";
+  const [theme, setTheme] = useState<Theme>(() => {
+    const saved = localStorage.getItem("theme");
+    return (saved as Theme) || "system";
+  });
+
+  const [colorTheme, setColorTheme] = useState<ColorTheme>(() => {
+    const saved = localStorage.getItem("color-theme");
+    return (saved as ColorTheme) || "blue";
   });
 
   useEffect(() => {
@@ -39,17 +30,20 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       root.classList.add(theme);
     }
 
+    localStorage.setItem("theme", theme);
+  }, [theme]);
+
+  useEffect(() => {
+    const root = window.document.documentElement;
     root.classList.remove(
-      "theme-violet",
       "theme-blue",
+      "theme-violet",
       "theme-green",
       "theme-rose",
     );
-    root.classList.add(`theme-${colorScheme}`);
-
-    localStorage.setItem("theme", theme);
-    localStorage.setItem("colorScheme", colorScheme);
-  }, [theme, colorScheme]);
+    root.classList.add(`theme-${colorTheme}`);
+    localStorage.setItem("color-theme", colorTheme);
+  }, [colorTheme]);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
@@ -67,7 +61,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   return (
     <ThemeContext.Provider
-      value={{ theme, colorScheme, setTheme, setColorScheme }}
+      value={{ theme, setTheme, colorTheme, setColorTheme }}
     >
       {children}
     </ThemeContext.Provider>

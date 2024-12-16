@@ -1,5 +1,6 @@
+// the global theme (dark or light) of the app
 import { useContext } from "react";
-import { ThemeContext } from "../providers/ThemeProvider";
+import { ThemeContext } from "../contexts/ThemeContext";
 
 export function useTheme() {
   const context = useContext(ThemeContext);

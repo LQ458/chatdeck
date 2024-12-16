@@ -11,7 +11,7 @@ export function RoomDetail() {
   // useEffect(() => {
   //   let retryCount = 0;
   //   const maxRetries = 3;
-    
+
   //   const fetchRoom = async () => {
   //     if (!connected) {
   //       if (retryCount < maxRetries) {

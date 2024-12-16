@@ -1,26 +1,25 @@
 import { Lock } from "lucide-react";
 import { useState } from "react";
 // import { useNavigate } from "react-router-dom";
-// import { useSocket } from "../hooks/useSocket";
-
+import axios from "../utils/axios";
+import { useAuth } from "../hooks/useAuth";
 export function PrivateRoom() {
   // const navigate = useNavigate();
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
-  // const token = localStorage.getItem("token");
-  // const { createRoom } = useSocket(token as string);
+  const { user } = useAuth();
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!name.trim()) return;
+    await axios.post("/api/rooms/create-room", {
+      name,
+      type: "private",
+      password: password || undefined,
+      createdBy: user?.id,
+    });
 
-  // const handleSubmit = async (e: React.FormEvent) => {
-  //   e.preventDefault();
-  //   if (!name.trim()) return;
-  //   const resp = await createRoom({
-  //     name,
-  //     type: "private",
-  //     password: password || undefined,
-  //   });
-
-  //   navigate(`/private-room/${resp?.roomId}`);
-  // };
+    // navigate(`/private-room/${resp?.data?.roomId}`);
+  };
 
   return (
     <div className="max-w-2xl mx-auto px-4">
@@ -33,7 +32,7 @@ export function PrivateRoom() {
             Create Private Room
           </h2>
 
-          <form className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-6">
             <div>
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                 Room Name

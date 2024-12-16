@@ -1,19 +1,19 @@
 import { Palette, Check } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
-import { useColorTheme } from "../hooks/useColorTheme";
+import { useTheme } from "../hooks/useTheme";
 
 const themes = [
   { id: "blue", name: "蓝色" },
   { id: "violet", name: "紫色" },
   { id: "green", name: "绿色" },
   { id: "rose", name: "玫瑰" },
-];
+] as const;
 
 type ColorTheme = "blue" | "violet" | "green" | "rose";
 
 export function ColorThemeToggle() {
   const [isOpen, setIsOpen] = useState(false);
-  const { theme, setTheme } = useColorTheme();
+  const { colorTheme, setColorTheme } = useTheme();
   const menuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -43,14 +43,14 @@ export function ColorThemeToggle() {
             <button
               key={t.id}
               onClick={() => {
-                setTheme(t.id as ColorTheme);
+                setColorTheme(t.id as ColorTheme);
                 setIsOpen(false);
               }}
               className="flex items-center w-full px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
             >
               <div className={`w-4 h-4 rounded-full bg-${t.id}-500 mr-3`} />
               <span>{t.name}</span>
-              {theme === t.id && (
+              {colorTheme === t.id && (
                 <Check className="h-4 w-4 ml-auto text-primary-500" />
               )}
             </button>

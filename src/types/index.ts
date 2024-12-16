@@ -33,3 +33,16 @@ export interface AuthState {
   signInWithGoogle?: () => Promise<void>;
   updateUser?: (user: User) => void;
 }
+
+export type Theme = "light" | "dark" | "system";
+export type ColorScheme = "violet" | "blue" | "green" | "rose";
+// theme context type
+
+export interface ThemeContextType {
+  theme: Theme;
+  colorScheme: ColorScheme;
+  setTheme: (theme: Theme) => void;
+  setColorScheme: (scheme: ColorScheme) => void;
+}
+
+export type Position = "relative" | "absolute" | "fixed" | "sticky";

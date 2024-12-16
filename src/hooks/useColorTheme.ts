@@ -1,3 +1,4 @@
+// the global color theme of the app
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
@@ -14,13 +15,12 @@ export const useColorTheme = create<ColorThemeStore>()(
       theme: "blue",
       setTheme: (theme) => {
         set({ theme });
-        // 更新主题色类
+        // 更新DOM中的主题类
         document.documentElement.classList.remove(
           "theme-blue",
           "theme-violet",
           "theme-green",
           "theme-rose",
-          "theme-amber",
         );
         document.documentElement.classList.add(`theme-${theme}`);
       },

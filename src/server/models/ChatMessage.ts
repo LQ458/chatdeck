@@ -10,7 +10,7 @@ const chatMessageSchema = new mongoose.Schema(
     type: {
       type: String,
       enum: Object.values(MessageType),
-      default: MessageType.TEXT
+      default: MessageType.TEXT,
     },
     user: {
       type: mongoose.Schema.Types.ObjectId,
@@ -23,21 +23,21 @@ const chatMessageSchema = new mongoose.Schema(
     },
     replyTo: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "ChatMessage"
+      ref: "ChatMessage",
     },
     status: {
       type: String,
       enum: ["sent", "delivered", "read", "deleted"],
-      default: "sent"
+      default: "sent",
     },
     createdAt: {
       type: Date,
-      default: Date.now
-    }
+      default: Date.now,
+    },
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 export const ChatMessage = mongoose.model("ChatMessage", chatMessageSchema);
