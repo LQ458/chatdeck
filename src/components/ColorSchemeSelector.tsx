@@ -18,7 +18,7 @@ export function ColorSchemeSelector() {
         {colorSchemes.map((scheme) => (
           <button
             key={scheme.id}
-            onClick={() => setColorScheme(scheme.id as any)}
+            onClick={() => setColorScheme(scheme.id)}
             className={`w-8 h-8 rounded-full flex items-center justify-center ${scheme.class} transition-transform ${
               colorScheme === scheme.id
                 ? "scale-110 ring-2 ring-white ring-offset-2 dark:ring-gray-800 dark:ring-offset-gray-900"

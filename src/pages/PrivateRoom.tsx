@@ -1,26 +1,26 @@
 import { Lock } from "lucide-react";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useSocket } from "../hooks/useSocket";
+// import { useNavigate } from "react-router-dom";
+// import { useSocket } from "../hooks/useSocket";
 
 export function PrivateRoom() {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
-  const token = localStorage.getItem("token");
-  const { createRoom } = useSocket(token as string);
+  // const token = localStorage.getItem("token");
+  // const { createRoom } = useSocket(token as string);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!name.trim()) return;
-    const resp = await createRoom({
-      name,
-      type: "private",
-      password: password || undefined,
-    });
+  // const handleSubmit = async (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   if (!name.trim()) return;
+  //   const resp = await createRoom({
+  //     name,
+  //     type: "private",
+  //     password: password || undefined,
+  //   });
 
-    navigate(`/private-room/${resp?.roomId}`);
-  };
+  //   navigate(`/private-room/${resp?.roomId}`);
+  // };
 
   return (
     <div className="max-w-2xl mx-auto px-4">

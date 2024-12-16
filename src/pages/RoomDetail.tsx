@@ -1,43 +1,40 @@
-import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { MessageCircle, Users, Copy } from "lucide-react";
 import { Room } from "../types";
-import { useSocket } from "../hooks/useSocket";
 
 export function RoomDetail() {
-  const { id } = useParams<{ id: string }>();
-  const token = localStorage.getItem("token");
-  const { getRoom, connected } = useSocket(token as string);
+  // const token = localStorage.getItem("token");
+  // const { getRoom, connected } = useSocket(token as string);
   const [room, setRoom] = useState<Room | null>(null);
   const [error, setError] = useState<string>("");
 
-  useEffect(() => {
-    let retryCount = 0;
-    const maxRetries = 3;
+  // useEffect(() => {
+  //   let retryCount = 0;
+  //   const maxRetries = 3;
     
-    const fetchRoom = async () => {
-      if (!connected) {
-        if (retryCount < maxRetries) {
-          retryCount++;
-          setTimeout(fetchRoom, 1000); // 1秒后重试
-          return;
-        }
-        setError("Failed to connect to server");
-        return;
-      }
+  //   const fetchRoom = async () => {
+  //     if (!connected) {
+  //       if (retryCount < maxRetries) {
+  //         retryCount++;
+  //         setTimeout(fetchRoom, 1000); // 1秒后重试
+  //         return;
+  //       }
+  //       setError("Failed to connect to server");
+  //       return;
+  //     }
 
-      try {
-        const roomData = await getRoom(id as string);
-        setRoom(roomData);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : "Failed to fetch room");
-      }
-    };
+  //     try {
+  //       const roomData = await getRoom(id as string);
+  //       setRoom(roomData);
+  //     } catch (err) {
+  //       setError(err instanceof Error ? err.message : "Failed to fetch room");
+  //     }
+  //   };
 
-    if (id) {
-      fetchRoom();
-    }
-  }, [id, connected, getRoom]);
+  //   if (id) {
+  //     fetchRoom();
+  //   }
+  // }, [id, connected, getRoom]);
 
   if (error) return <div>Error: {error}</div>;
   if (!room) return <div>Loading...</div>;

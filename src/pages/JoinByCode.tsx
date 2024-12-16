@@ -1,7 +1,6 @@
 import { Hash } from "lucide-react";
 import { useState } from "react";
-import { useSocketStore } from "../store/useSocketStore";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import { Toast } from "primereact/toast";
 
 export function JoinByCode({
@@ -9,32 +8,32 @@ export function JoinByCode({
 }: {
   toast: React.RefObject<Toast>
 }) {
-  const navigate = useNavigate();
-  const { joinRoom } = useSocketStore();
+  // const navigate = useNavigate();
+  // const { joinRoom } = useSocketStore();
   
   const [roomCode, setRoomCode] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!roomCode) return;
+  // const handleSubmit = async (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   if (!roomCode) return;
 
-    setLoading(true);
-    try {
-      const { roomId } = await joinRoom({ code: roomCode, password });
-      navigate(`/room/${roomId}`);
-    } catch (error) {
-      toast.current?.show({
-        severity: "error",
-        summary: "Error",
-        detail: error instanceof Error ? error.message : "Failed to join room",
-      });
-    } finally {
-      setLoading(false);
-    }
-  };
+  //   setLoading(true);
+  //   try {
+  //     const { roomId } = await joinRoom({ code: roomCode, password });
+  //     navigate(`/room/${roomId}`);
+  //   } catch (error) {
+  //     toast.current?.show({
+  //       severity: "error",
+  //       summary: "Error",
+  //       detail: error instanceof Error ? error.message : "Failed to join room",
+  //     });
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   return (
     <div className="max-w-2xl mx-auto px-4">
@@ -47,7 +46,7 @@ export function JoinByCode({
             Join Room by Code
           </h2>
 
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form className="space-y-6">
             <div>
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                 Room Code

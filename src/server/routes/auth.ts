@@ -108,8 +108,8 @@ router.post("/request-reset", async (req: any, res: any) => {
     );
 
     // Save reset token to user
-    user.resetToken = resetToken;
-    user.resetTokenExpiry = new Date(Date.now() + 3600000); // 1 hour
+    user.resetPasswordToken = resetToken;
+    user.resetPasswordExpires = new Date(Date.now() + 3600000); // 1 hour
     await user.save();
 
     // TODO: Send reset email with token
@@ -132,8 +132,8 @@ router.post("/reset-password", async (req: any, res: any) => {
     // Find user and check token
     const user = await User.findOne({
       _id: decoded.userId,
-      resetToken: token,
-      resetTokenExpiry: { $gt: Date.now() },
+      resetPasswordToken: token,
+      resetPasswordExpires: { $gt: Date.now() },
     });
 
     if (!user) {
@@ -144,8 +144,8 @@ router.post("/reset-password", async (req: any, res: any) => {
 
     // Update password
     user.password = newPassword;
-    user.resetToken = undefined;
-    user.resetTokenExpiry = undefined;
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpires = undefined;
     await user.save();
 
     res.status(200).json({ message: "Password reset successful" });
