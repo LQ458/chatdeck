@@ -33,7 +33,7 @@ export function PrivateRoom() {
             Create Private Room
           </h2>
 
-          <form className="space-y-6" onSubmit={handleSubmit}>
+          <form className="space-y-6">
             <div>
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                 Room Name
