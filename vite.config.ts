@@ -4,12 +4,26 @@ import react from "@vitejs/plugin-react";
 // https://vitejs.dev/config/
 export default defineConfig({
   base: "./",
-  plugins: [react()],
+  plugins: [
+    react({
+      babel: {
+        plugins: [
+          ["@babel/plugin-transform-react-jsx", { runtime: "automatic" }],
+        ],
+      },
+    }),
+  ],
   optimizeDeps: {
     exclude: ["lucide-react"],
   },
   build: {
     target: "es2015",
+    cssCodeSplit: false,
+    rollupOptions: {
+      output: {
+        manualChunks: undefined,
+      },
+    },
   },
   server: {
     port: 5173,
