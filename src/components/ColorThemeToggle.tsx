@@ -1,5 +1,6 @@
-import { Palette, Check } from "lucide-react";
-import { useState, useRef, useEffect } from "react";
+import { Popover, Transition } from "@headlessui/react";
+import { Fragment } from "react";
+import { Palette } from "lucide-react";
 import { useTheme } from "../hooks/useTheme";
 
 const themes = [
@@ -12,51 +13,55 @@ const themes = [
 type ColorTheme = "blue" | "violet" | "green" | "rose";
 
 export function ColorThemeToggle() {
-  const [isOpen, setIsOpen] = useState(false);
   const { colorTheme, setColorTheme } = useTheme();
-  const menuRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
-        setIsOpen(false);
-      }
-    }
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
 
   return (
-    <div className="relative" ref={menuRef}>
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="p-2 text-gray-600 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400 rounded-lg"
-        title="选择颜色主题"
-        id="color-scheme-select"
-      >
-        <Palette className="h-5 w-5" />
-      </button>
+    <Popover className="relative">
+      {({ open }) => (
+        <>
+          <Popover.Button className="flex items-center justify-center w-10 h-10 rounded-lg text-gray-500 hover:text-primary-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-primary-400 dark:hover:bg-gray-800 transition-colors">
+            <Palette className="h-5 w-5" />
+          </Popover.Button>
 
-      {isOpen && (
-        <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 py-1 z-50">
-          {themes.map((t) => (
-            <button
-              key={t.id}
-              onClick={() => {
-                setColorTheme(t.id as ColorTheme);
-                setIsOpen(false);
-              }}
-              className="flex items-center w-full px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
+          <Transition
+            show={open}
+            as={Fragment}
+            enter="transition ease-out duration-200"
+            enterFrom="opacity-0 translate-y-1"
+            enterTo="opacity-100 translate-y-0"
+            leave="transition ease-in duration-150"
+            leaveFrom="opacity-100 translate-y-0"
+            leaveTo="opacity-0 translate-y-1"
+          >
+            <Popover.Panel
+              className="fixed right-4 z-50 mt-2 w-48 origin-top-right bg-white dark:bg-gray-800 rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:absolute sm:right-0 sm:left-auto"
+              static
             >
-              <div className={`w-4 h-4 rounded-full bg-${t.id}-500 mr-3`} />
-              <span>{t.name}</span>
-              {colorTheme === t.id && (
-                <Check className="h-4 w-4 ml-auto text-primary-500" />
-              )}
-            </button>
-          ))}
-        </div>
+              <div className="p-2 space-y-1">
+                {themes.map((theme) => (
+                  <button
+                    key={theme.id}
+                    onClick={() => setColorTheme(theme.id as ColorTheme)}
+                    className={`
+                      flex items-center w-full px-3 py-2 text-sm rounded-md
+                      ${
+                        colorTheme === theme.id
+                          ? "text-primary-600 bg-primary-50 dark:text-primary-400 dark:bg-primary-900/50"
+                          : "text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700"
+                      }
+                    `}
+                  >
+                    <div
+                      className={`w-4 h-4 rounded-full bg-${theme.id}-500 mr-3`}
+                    />
+                    {theme.name}
+                  </button>
+                ))}
+              </div>
+            </Popover.Panel>
+          </Transition>
+        </>
       )}
-    </div>
+    </Popover>
   );
 }

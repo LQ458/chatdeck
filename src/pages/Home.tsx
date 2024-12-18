@@ -1,15 +1,13 @@
 import { Link } from "react-router-dom";
 import { ChatPreview } from "../components/ChatPreview";
-import { AuthDialog } from "../components/ui/auth-dialog";
 import { useAuth } from "../hooks/useAuth";
 
-export function Home({
-  setIsAuthDialogOpen,
-  isAuthDialogOpen,
-}: {
+interface HomeProps {
   setIsAuthDialogOpen: (open: boolean) => void;
   isAuthDialogOpen: boolean;
-}) {
+}
+
+export function Home({ setIsAuthDialogOpen }: HomeProps) {
   const { isAuthenticated } = useAuth();
 
   return (
@@ -26,13 +24,13 @@ export function Home({
         </p>
 
         {isAuthenticated ? (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-3xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
             <Link
               to="/private-room"
               className="p-6 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-primary-500 dark:hover:border-primary-500 transition-colors"
             >
               <h3 className="text-lg font-semibold mb-2 text-gray-900 dark:text-white">
-                Create Private Room
+                Private Room
               </h3>
               <p className="text-gray-600 dark:text-gray-400">
                 Start your own private chat room
@@ -48,6 +46,18 @@ export function Home({
               </h3>
               <p className="text-gray-600 dark:text-gray-400">
                 Create structured debate rooms
+              </p>
+            </Link>
+
+            <Link
+              to="/random-room"
+              className="p-6 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-primary-500 dark:hover:border-primary-500 transition-colors"
+            >
+              <h3 className="text-lg font-semibold mb-2 text-gray-900 dark:text-white">
+                Random Chat
+              </h3>
+              <p className="text-gray-600 dark:text-gray-400">
+                Chat with random online users
               </p>
             </Link>
 
@@ -74,10 +84,6 @@ export function Home({
       </div>
 
       <ChatPreview />
-      <AuthDialog
-        isOpen={isAuthDialogOpen}
-        onClose={() => setIsAuthDialogOpen(false)}
-      />
     </div>
   );
 }

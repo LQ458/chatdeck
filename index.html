@@ -59,9 +59,11 @@
       })();
     </script>
 
-    <!-- 预加载资源 -->
+    <!-- 预加载关键资源 -->
     <link rel="modulepreload" href="/src/main.tsx" />
-    <link rel="preload" href="/src/index.css" as="style" />
+
+    <!-- 直接加载CSS而不是预加载 -->
+    <link rel="stylesheet" href="/src/index.css" />
 
     <!-- 关键CSS -->
     <style>

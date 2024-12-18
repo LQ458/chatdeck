@@ -1,9 +1,13 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import { X, Loader2 } from "lucide-react";
 import { useAuth } from "../../hooks/useAuth";
 import { FcGoogle } from "react-icons/fc";
 import { useTourStore } from "../../store/useTourStore";
+import { ValidationErrors } from "../../types/auth";
+import { message } from "antd";
+
 interface AuthDialogProps {
   isOpen: boolean;
   onClose: () => void;
@@ -11,31 +15,60 @@ interface AuthDialogProps {
 
 export function AuthDialog({ isOpen, onClose }: AuthDialogProps) {
   const [isSignIn, setIsSignIn] = useState(true);
-  const [identifier, setIdentifier] = useState(""); // email or username
+  const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [errors, setErrors] = useState<ValidationErrors>({});
   const { signIn, signUp, signInWithGoogle } = useAuth();
   const { setShowTour } = useTourStore();
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError("");
+    setErrors({});
     setLoading(true);
 
     try {
-      if (isSignIn) {
+      if (isSignIn && signIn) {
         await signIn(identifier, password);
-      } else {
+      } else if (signUp) {
         if (!name.trim()) {
-          throw new Error("Name is required");
+          const validationError = { name: "Please enter your username" };
+          setErrors(validationError);
+          message.warning("Please enter your username");
+          return;
         }
         await signUp(identifier, password, name);
         setShowTour(true);
       }
       onClose();
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Authentication failed");
+      message.success(isSignIn ? "Welcome back!" : "Registration successful");
+    } catch (err: unknown) {
+      console.error("Auth error:", err);
+
+      if ((err as any).response?.data?.type === "validation") {
+        const validationErrors = (err as any).response.data.errors || {};
+        setErrors(validationErrors);
+
+        Object.entries(validationErrors).forEach(([msg]) => {
+          message.warning(msg as string);
+        });
+      } else if ((err as any).response?.status === 401) {
+        const errorMessage = "Username or password error";
+        setErrors({ general: errorMessage });
+        message.error(errorMessage);
+      } else if ((err as any).message === "Network Error") {
+        const errorMessage =
+          "Network connection failed, please check the network settings";
+        setErrors({ general: errorMessage });
+        message.error(errorMessage);
+      } else {
+        const errorMessage =
+          (err as any).response?.data?.message ||
+          "Operation failed, please try again later";
+        setErrors({ general: errorMessage });
+        message.error(errorMessage);
+      }
     } finally {
       setLoading(false);
     }
@@ -88,12 +121,6 @@ export function AuthDialog({ isOpen, onClose }: AuthDialogProps) {
                   </button>
                 </div>
 
-                {error && (
-                  <div className="mb-4 p-3 rounded-lg bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-400 text-sm">
-                    {error}
-                  </div>
-                )}
-
                 <form onSubmit={handleSubmit} className="space-y-4">
                   {!isSignIn && (
                     <div>
@@ -108,12 +135,17 @@ export function AuthDialog({ isOpen, onClose }: AuthDialogProps) {
                         id="name"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
-                        className={inputClassName}
+                        className={`${inputClassName} ${errors.name ? "border-red-500 focus:border-red-500 focus:ring-red-500" : ""}`}
                         required
                         minLength={2}
                         maxLength={50}
                         placeholder="Your name"
                       />
+                      {errors.name && (
+                        <p className="mt-1 text-sm text-red-600 dark:text-red-400">
+                          {errors.name}
+                        </p>
+                      )}
                     </div>
                   )}
 
@@ -129,12 +161,17 @@ export function AuthDialog({ isOpen, onClose }: AuthDialogProps) {
                       id="identifier"
                       value={identifier}
                       onChange={(e) => setIdentifier(e.target.value)}
-                      className={inputClassName}
+                      className={`${inputClassName} ${errors.identifier ? "border-red-500 focus:border-red-500 focus:ring-red-500" : ""}`}
                       required
                       placeholder={
                         isSignIn ? "Email or username" : "Your email"
                       }
                     />
+                    {errors.identifier && (
+                      <p className="mt-1 text-sm text-red-600 dark:text-red-400">
+                        {errors.identifier}
+                      </p>
+                    )}
                   </div>
 
                   <div>
@@ -149,11 +186,16 @@ export function AuthDialog({ isOpen, onClose }: AuthDialogProps) {
                       id="password"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
-                      className={inputClassName}
+                      className={`${inputClassName} ${errors.password ? "border-red-500 focus:border-red-500 focus:ring-red-500" : ""}`}
                       required
                       minLength={6}
                       placeholder="••••••••"
                     />
+                    {errors.password && (
+                      <p className="mt-1 text-sm text-red-600 dark:text-red-400">
+                        {errors.password}
+                      </p>
+                    )}
                   </div>
 
                   <button
@@ -194,7 +236,7 @@ export function AuthDialog({ isOpen, onClose }: AuthDialogProps) {
                   <button
                     onClick={() => {
                       setIsSignIn(!isSignIn);
-                      setError("");
+                      setErrors({});
                       setIdentifier("");
                       setPassword("");
                       setName("");
